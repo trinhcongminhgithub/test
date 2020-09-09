@@ -47,15 +47,21 @@ app.post('/reg',function(request,response){
                         if(error){
                             response.send(error);
                         }
+			else{
+			    request.session.loggedin=true;
+			    request.session.username=username;
+			    response.redirec('/home');
+			}
                     });
                 }
             }
+	    response.end();
         });
     }
     else{
         response.send('Password and Confirm Password do not match');
-    }
-    response.end();
+    	response.end();
+	}
 });
 
 app.post('/auth', function(request,response){
