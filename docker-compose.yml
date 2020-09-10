@@ -1,0 +1,17 @@
+version: '3'
+services: 
+  db: 
+    image: mysql:5.7.31
+    environment: 
+      MYSQL_ROOT_PASSWORD: minh
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: minh
+      MYSQL_PASSWORD: minh 
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d/
+  webapp2:
+    build: '.'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db

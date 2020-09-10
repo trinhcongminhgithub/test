@@ -5,10 +5,10 @@ var bodyParser = require('body-parser');
 var path = require('path');
 
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'mydatabase'
+    host: 'db',
+    user: 'minh',
+    password: 'minh',
+    database: 'mydatabase',
 });
 
 var app = express();
@@ -37,25 +37,27 @@ app.post('/reg',function(request,response){
         connection.query('SELECT * FROM accounts WHERE username = ?',[username],function(error,results,fields){
             if(error){
                 response.send(error);
+		response.end();
             }
             else{
                 if(results.length > 0){
                     response.send("Username already existed");
+		    response.end();
                 }
                 else{
                     connection.query('INSERT INTO accounts (username,password,email) VALUES (?,?,?)',[username,pass1,email],function(error,results,fields){
                         if(error){
-                            response.send(error);
-                        }
-			else{
-			    request.session.loggedin=true;
-			    request.session.username=username;
-			    response.redirec('/home');
+			    response.send(error);
 			}
+			else{
+                            request.session.loggedin=true;
+			    request.session.username=username;
+			    response.redirect('/home');
+                        }
+			response.end();
                     });
-                }
+		}
             }
-	    response.end();
         });
     }
     else{
@@ -92,7 +94,7 @@ app.get('/home', function(request,response){
     if(request.session.loggedin){
         response.send('Welcome back, ' +request.session.username+'!');
     }else{
-        response.send('Please login to view this page!')
+        response.send('Please login to view this page!');
     }
     response.end();
 });
