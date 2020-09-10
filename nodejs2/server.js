@@ -41,7 +41,7 @@ app.post('/reg',function(request,response){
             }
             else{
                 if(results.length > 0){
-                    response.send("Username already existed");
+                    response.send("Username already existed 2");
 		    response.end();
                 }
                 else{
@@ -61,7 +61,7 @@ app.post('/reg',function(request,response){
         });
     }
     else{
-        response.send('Password and Confirm Password do not match');
+        response.send('Password and Confirm Password do not match 2');
     	response.end();
 	}
 });
@@ -79,12 +79,12 @@ app.post('/auth', function(request,response){
             request.session.username = username;
             response.redirect('/home');
         }else{
-            response.send('Incorrect Username and/or Password!');
+            response.send('Incorrect Username and/or Password! 2');
         }}
         response.end();
     });
 } else{
-    response.send('Please enter Username and Password!');
+    response.send('Please enter Username and Password! 2');
     response.end();
 }
 });
@@ -92,11 +92,11 @@ app.post('/auth', function(request,response){
 
 app.get('/home', function(request,response){
     if(request.session.loggedin){
-        response.send('Welcome back, ' +request.session.username+'!');
+        response.send('Welcome back, ' +request.session.username+'! 2');
     }else{
-        response.send('Please login to view this page!');
+        response.send('Please login to view this page! 2');
     }
     response.end();
 });
-app.listen(3000);
+app.listen(3001);
 

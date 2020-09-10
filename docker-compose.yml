@@ -2,6 +2,7 @@ version: '3'
 services: 
   db: 
     image: mysql:5.7.31
+    container_name: db
     environment: 
       MYSQL_ROOT_PASSWORD: minh
       MYSQL_DATABASE: mydatabase
@@ -9,9 +10,16 @@ services:
       MYSQL_PASSWORD: minh 
     volumes:
       - ./dump:/docker-entrypoint-initdb.d/
-  webapp2:
-    build: '.'
-    ports:
-      - '3000:3000'
+  webapp:
+    build: './nodejs'
     depends_on:
       - db
+    ports:
+      - "3000"
+  balancer: 
+    build: './load-balancer'
+    container_name: balancer
+    depends_on:
+    - webapp
+    ports:
+    - "8000:8000"

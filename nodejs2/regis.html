@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Registration Form 2</title>
+        <style>
+            .regis-form {
+                width: 300px;
+                margin: 0 auto;
+                font-family: Tahoma, Geneva, Verdana, sans-serif;
+            }
+            .regis-form h1 {
+                text-align: center;
+                color: #4d4d4d;
+                font-size: 24px;
+                padding: 20px 0 20px 0;
+            }
+            .regis-form input[type="password"],
+            .regis-form input[type="text"]{
+                width: 100%;
+                padding: 15px;
+                border: 1px solid #dddddd;
+                margin-bottom: 15px;
+                box-sizing: border-box;
+            }
+            .regis-form input[type="submit"]{
+                width: 100%;
+                padding: 15px;
+                background-color: #535b63;
+                border: 0;
+                box-sizing: border-box;
+                cursor: pointer;
+                font-weight: bold;
+                color: #ffffff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="regis-form">
+            <h1>Registration Form 2</h1>
+            <form action="reg" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="passwordconf" placeholder="Confirm Password" required>
+                <input type="submit">
+                <p>Already a user? <a href="/"><b>Log in</b></a></p>
+            </form>
+        </div>
+    </body>
+</html>
