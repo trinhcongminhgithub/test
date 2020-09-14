@@ -1,9 +1,14 @@
 var mysql = require('mysql');
 var express = require('express');
 var session = require('express-session');
+var redis = require('redis');
+var redisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var path = require('path');
-
+var client =redis.createClient({
+    host: 'redishost',
+    port:6379
+});
 var connection = mysql.createConnection({
     host: 'db',
     user: 'minh',
@@ -15,8 +20,9 @@ var app = express();
 
 app.use(session({
     secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+    store: new redisStore({host:'redishost', port:6379,client:client,ttl:5000}),
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

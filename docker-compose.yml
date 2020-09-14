@@ -9,17 +9,29 @@ services:
       MYSQL_USER: minh
       MYSQL_PASSWORD: minh 
     volumes:
-      - ./dump:/docker-entrypoint-initdb.d/
+      - ./mysql:/docker-entrypoint-initdb.d/
+    networks:
+      - backend
+  redishost:
+    image: redis
+    container_name: redishost
+    networks:
+      - backend
+    volumes:
+      - ./redis/redis.conf /etc/redis
   webapp:
     build: './nodejs'
-    depends_on:
-      - db
-    ports:
-      - "3000"
+    networks:
+      - frontend
+      - backend
   balancer: 
     build: './load-balancer'
     container_name: balancer
-    depends_on:
-    - webapp
+    networks:
+      - frontend
+    privileged: true
     ports:
-    - "8000:8000"
+      - "800:8000"
+networks:
+  frontend:
+  backend:
